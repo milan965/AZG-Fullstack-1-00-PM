@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 function FormValidation() {
+  // Store all form values
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,26 +11,35 @@ function FormValidation() {
     city: "",
   });
 
+  // Store validation error messages
   const [errors, setErrors] = useState({});
 
-  // Handle Input Change
+  // Handle all input changes
   function handleChange(e) {
+    // Get values from the input element
     const { name, value, type, checked } = e.target;
 
+    // Check if the input is a checkbox
     if (type === "checkbox") {
+      // Create a copy of the hobbies array
       let updatedHobbies = [...formData.hobbies];
 
+      // If checkbox is selected
       if (checked) {
+        // Add hobby to the array
         updatedHobbies.push(value);
       } else {
+        // Remove hobby from the array
         updatedHobbies = updatedHobbies.filter((hobby) => hobby !== value);
       }
 
+      // Update hobbies in form data
       setFormData({
         ...formData,
         hobbies: updatedHobbies,
       });
     } else {
+      // Update other input values
       setFormData({
         ...formData,
         [name]: value,
@@ -37,63 +47,78 @@ function FormValidation() {
     }
   }
 
-  // Validation
+  // Validate the form
   function validate() {
+    // Create an empty object for errors
     let newErrors = {};
 
-    // Name
+    // Validate name
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
     }
 
-    // Email
+    // Validate email
     if (!formData.email) {
+      // Check if email is empty
       newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    } else if (
+      // Check if email format is invalid
+      !/\S+@\S+\.\S+/.test(formData.email)
+    ) {
       newErrors.email = "Invalid email";
     }
 
-    // Password
+    // Validate password
     if (!formData.password) {
+      // Check if password is empty
       newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
+      // Check password length
       newErrors.password = "Password must be at least 6 characters";
     }
 
-    // Gender
+    // Validate gender
     if (!formData.gender) {
       newErrors.gender = "Select gender";
     }
 
-    // Hobby
+    // Validate hobbies
     if (formData.hobbies.length === 0) {
       newErrors.hobbies = "Select at least one hobby";
     }
 
-    // City
+    // Validate city
     if (!formData.city) {
       newErrors.city = "Select city";
     }
 
+    // Return all errors
     return newErrors;
   }
 
-  // Submit
+  // Handle form submission
   function handleSubmit(e) {
+    // Prevent page refresh
     e.preventDefault();
 
+    // Run validation
     const validationErrors = validate();
 
+    // Check if there are any errors
     if (Object.keys(validationErrors).length > 0) {
+      // Store errors in state
       setErrors(validationErrors);
     } else {
+      // Clear previous errors
       setErrors({});
 
+      // Display form data in console
       console.log(formData);
 
+      // Show success message
       alert("Form Submitted Successfully");
 
-      // Reset
+      // Reset the form
       setFormData({
         name: "",
         email: "",
@@ -106,95 +131,162 @@ function FormValidation() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          <p>{errors.name}</p>
-        </div>
+    // Call handleSubmit when the form is submitted
+    <form onSubmit={handleSubmit}>
+      {/* Name field */}
 
-        {/* Email */}
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          <p>{errors.email}</p>
-        </div>
+      <div>
+        <label>Name:</label>
 
-        {/* Password */}
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <p>{errors.password}</p>
-        </div>
+        <input
+          type="text"
+          // Connect input with the name property
+          name="name"
+          // Set the current input value
+          value={formData.name}
+          // Handle input changes
+          onChange={handleChange}
+        />
 
-        {/* Gender */}
-        <div>
-          <label>Gender:</label>
-          <input
-            type="radio"
-            name="gender"
-            value="Male"
-            checked={formData.gender === "Male"}
-            onChange={handleChange}
-          />
-          Male
-          <input
-            type="radio"
-            name="gender"
-            value="Female"
-            checked={formData.gender === "Female"}
-            onChange={handleChange}
-          />
-          Female
-          <p>{errors.gender}</p>
-        </div>
+        {/* Display name error */}
+        <p>{errors.name}</p>
+      </div>
 
-       
-        <div>
-          <label>Hobbies:</label>
-          <input type="checkbox" value="Reading" onChange={handleChange} />
-          Reading
-          <input type="checkbox" value="Sports" onChange={handleChange} />
-          Sports
-          <input type="checkbox" value="Music" onChange={handleChange} />
-          Music
-          <p>{errors.hobbies}</p>
-        </div>
+      {/* Email field */}
 
-        
-        <div>
-          <label>City:</label>
+      <div>
+        <label>Email:</label>
 
-          <select name="city" value={formData.city} onChange={handleChange}>
-            <option value="">Select City</option>
-            <option value="Surat">Surat</option>
-            <option value="Ahmedabad">Ahmedabad</option>
-            <option value="Rajkot">Rajkot</option>
-          </select>
+        <input
+          type="email"
+          // Connect input with the email property
+          name="email"
+          // Set the current input value
+          value={formData.email}
+          // Handle input changes
+          onChange={handleChange}
+        />
 
-          <p>{errors.city}</p>
-        </div>
+        {/* Display email error */}
+        <p>{errors.email}</p>
+      </div>
 
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+      {/* Password field */}
+
+      <div>
+        <label>Password:</label>
+
+        <input
+          type="password"
+          // Connect input with the password property
+          name="password"
+          // Set the current input value
+          value={formData.password}
+          // Handle input changes
+          onChange={handleChange}
+        />
+
+        {/* Display password error */}
+        <p>{errors.password}</p>
+      </div>
+
+      {/* Gender field */}
+
+      <div>
+        <label>Gender:</label>
+        {/* Male option */}
+        <input
+          type="radio"
+          name="gender"
+          value="Male"
+          // Select Male when gender is Male
+          checked={formData.gender === "Male"}
+          // Handle radio button change
+          onChange={handleChange}
+        />
+        Male
+        {/* Female option */}
+        <input
+          type="radio"
+          name="gender"
+          value="Female"
+          // Select Female when gender is Female
+          checked={formData.gender === "Female"}
+          // Handle radio button change
+          onChange={handleChange}
+        />
+        Female
+        {/* Display gender error */}
+        <p>{errors.gender}</p>
+      </div>
+
+      {/* Hobby field */}
+
+      <div>
+        <label>Hobbies:</label>
+        {/* Reading checkbox */}
+        <input
+          type="checkbox"
+          value="Reading"
+          // Handle checkbox change
+          onChange={handleChange}
+        />
+        Reading
+        {/* Sports checkbox */}
+        <input
+          type="checkbox"
+          value="Sports"
+          // Handle checkbox change
+          onChange={handleChange}
+        />
+        Sports
+        {/* Music checkbox */}
+        <input
+          type="checkbox"
+          value="Music"
+          // Handle checkbox change
+          onChange={handleChange}
+        />
+        Music
+        {/* Display hobby error */}
+        <p>{errors.hobbies}</p>
+      </div>
+
+      {/* City field */}
+
+      <div>
+        <label>City:</label>
+
+        <select
+          name="city"
+          // Set the selected city
+          value={formData.city}
+          // Handle city change
+          onChange={handleChange}
+        >
+          {/* Default option */}
+
+          <option value="">Select City</option>
+
+          {/* City options */}
+
+          <option value="Surat">Surat</option>
+
+          <option value="Ahmedabad">Ahmedabad</option>
+
+          <option value="Rajkot">Rajkot</option>
+        </select>
+
+        {/* Display city error */}
+        <p>{errors.city}</p>
+      </div>
+
+      {/* Submit button */}
+
+      <button type="submit">Submit</button>
+    </form>
   );
 }
 
+// Export the component
 export default FormValidation;
