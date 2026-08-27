@@ -1,24 +1,11 @@
 import React from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
-const Product = () => {
-
-    const [data,setData] = useSearchParams();
-
-    const handleClick = () => {
-        setData({
-            name : 'mobile'
-        })
-    }
-     
-    
-
+const Contact = () => {
   return (
     <div>
-        <h1>Product</h1>
-        <h1>Category :- {data.get('name')}</h1>
+        <h1>Contact Page</h1>
         <nav>
             <ul>
                 <li>
@@ -33,15 +20,10 @@ const Product = () => {
                  <li>
                     <Link to="/product">Product</Link>
                 </li>
-
-                <li>
-                    <button onClick={ () => handleClick() }>Click</button>
-                </li>
-
             </ul>
         </nav>
     </div>
   )
 }
 
-export default Product
+export default Contact
