@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 const UserList = () => {
@@ -8,6 +8,31 @@ const UserList = () => {
      const [users,setUsers] = useState(
             localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : []
      )
+
+     const [filter,setFilter] = useState([]);
+
+     const [searchName,setSearchName] = useState("");
+
+     const nameWiseFilter = () => {
+        let filteredNames = [...users];
+        if(searchName){
+            filteredNames = users.filter((item)=>{
+                return item.name.toLowerCase().includes(searchName.toLowerCase())
+            })
+            setFilter(filteredNames)
+        }
+
+        
+     }
+
+
+     //search wise name useeffect working
+     useEffect(()=>{
+        setFilter(users)
+        nameWiseFilter();
+     },[searchName])
+
+
 
      const handleDelete = (id) => {
         let did = users.filter(val => val.id != id);
@@ -19,6 +44,8 @@ const UserList = () => {
   return (
     <div align="center">
         <h2>User List</h2>
+        <input type="text" onChange={ (e) => setSearchName(e.target.value) } value={searchName}placeholder='search name'/>
+        <hr />
         <table width="500" border="1">
             <thead>
                 <tr>
@@ -30,7 +57,7 @@ const UserList = () => {
             </thead>
             <tbody>
                 {
-                    users.map((user)=>{
+                    filter.map((user)=>{
                         return (
                             <tr key={user.id}>
                                 <td>{user.id}</td>
