@@ -13,12 +13,30 @@ const UserList = () => {
 
      const [searchName,setSearchName] = useState("");
 
-     const nameWiseFilter = () => {
+     const [sorting,setSorting] = useState("");
+
+     
+     
+
+     const filterFunction = () => {
         let filteredNames = [...users];
         if(searchName){
             filteredNames = users.filter((item)=>{
                 return item.name.toLowerCase().includes(searchName.toLowerCase())
             })
+            setFilter(filteredNames)
+        }
+
+        if(sorting){
+            if(sorting === "asc"){
+                filteredNames.sort((a, b) => {
+                    return a.name.localeCompare(b.name);
+                });
+            }else{
+                filteredNames.sort((a, b) => {
+                    return b.name.localeCompare(a.name);
+                });
+            }
             setFilter(filteredNames)
         }
 
@@ -29,8 +47,8 @@ const UserList = () => {
      //search wise name useeffect working
      useEffect(()=>{
         setFilter(users)
-        nameWiseFilter();
-     },[searchName])
+        filterFunction();
+     },[searchName,sorting])
 
 
 
@@ -46,6 +64,15 @@ const UserList = () => {
         <h2>User List</h2>
         <input type="text" onChange={ (e) => setSearchName(e.target.value) } value={searchName}placeholder='search name'/>
         <hr />
+
+        <select name='sorting' onChange={ (e) => setSorting(e.target.value) }>
+            <option value="">---Select Sort---</option>
+            <option value="asc">Asc</option>
+            <option value="dsc">Dsc</option>
+
+        </select>
+        <hr />
+
         <table width="500" border="1">
             <thead>
                 <tr>
