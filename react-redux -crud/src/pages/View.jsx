@@ -1,15 +1,46 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
+import { DELETE_USER } from '../redux/action/crudAction';
 
 const ViewUser = () => {
-
+    const dispatch = useDispatch();
     let users = useSelector(state => state.crud.users);
-    console.log(users);
-    
-
+  
   return (
     <div align="center">
         <h1>View Users</h1>
+
+        <table align="center" border={1} width={300}>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {
+                  users.map((val)=>{
+                      return (
+                        <tr key={val.id}>
+                          <td>{val.id}</td>
+                          <td>{val.name}</td>
+                          <td>{val.age}</td>
+                          <td>
+                            <button onClick={ () => dispatch(DELETE_USER(val.id)) }>Delete</button>
+                          </td>
+                        </tr>
+                      )
+                  })
+              }
+
+            </tbody>
+        </table>
+           <Link to={`/add`}>Add User</Link>
+
     </div>
   )
 }
