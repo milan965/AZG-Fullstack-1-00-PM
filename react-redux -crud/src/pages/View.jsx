@@ -1,10 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom';
-import { DELETE_USER } from '../redux/action/crudAction';
+import { Link, useNavigate } from 'react-router-dom';
+import { DELETE_USER, EDIT_USER } from '../redux/action/crudAction';
 
 const ViewUser = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     let users = useSelector(state => state.crud.users);
   
   return (
@@ -31,6 +32,8 @@ const ViewUser = () => {
                           <td>{val.age}</td>
                           <td>
                             <button onClick={ () => dispatch(DELETE_USER(val.id)) }>Delete</button>
+                              ||
+                            <button onClick={ () => navigate(`/edit/${val.id}`) }>Edit</button>
                           </td>
                         </tr>
                       )

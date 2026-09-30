@@ -1,5 +1,6 @@
 let initialState = {
-    users : localStorage.getItem('crud') ? JSON.parse(localStorage.getItem('crud')) : []
+    users : localStorage.getItem('crud') ? JSON.parse(localStorage.getItem('crud')) : [],
+    single : null
 }
 export const crudReducer = (state=initialState,action) => {
 
@@ -20,6 +21,35 @@ export const crudReducer = (state=initialState,action) => {
                 ...state,
                 users:ddata
             };
+
+        
+        case 'edituser':
+            let edit = state.users.find(value => value.id == action.payload)
+         
+        return{
+            ...state,
+            single : edit
+        };
+
+        case 'updateuser':
+            const {id,name,age} = action.payload;
+
+            let up = state.users.map((val)=>{
+                if(val.id == id){
+                    val.name = name;
+                    val.age = age
+                }
+                return val;
+            })
+
+            localStorage.setItem('crud',JSON.stringify(up))
+            
+            
+        return{
+            ...state,
+            users : up
+        }
+
 
         default:
             return state;

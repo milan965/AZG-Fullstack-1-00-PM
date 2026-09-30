@@ -12,3 +12,19 @@ export const DELETE_USER = (id) => {
         payload : id
     }
 }
+
+
+export const EDIT_USER = (id) => {    
+    return{
+        type:'edituser',
+        payload : id
+    }
+}
+
+
+export const UPDATE_USER = (record) => {    
+    return{
+        type:'updateuser',
+        payload : record
+    }
+}
