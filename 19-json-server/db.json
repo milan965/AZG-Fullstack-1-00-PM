@@ -1,0 +1,24 @@
+{
+    "users":[
+        {
+            "name" : "ajay",
+            "age" : 21
+        },
+        {
+            "name" : "vishal",
+            "age" : 22
+        }
+    ],
+
+    "products":[
+
+    ],
+
+    "carts":[
+
+    ],
+
+    "posts" : [
+        
+    ]
+}

@@ -1,0 +1,11 @@
+first step
+npm i json-server
+
+
+2
+Create a JSON File
+
+
+3
+run json server
+npx json-server --watch db.json --port 8000
