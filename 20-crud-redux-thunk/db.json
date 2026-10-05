@@ -9,6 +9,11 @@
       "name": "mayur",
       "age": "21",
       "id": "oYBhpETdcR0"
+    },
+    {
+      "id": "lWtlFG39fEk",
+      "name": "ajay--",
+      "age": "21111"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

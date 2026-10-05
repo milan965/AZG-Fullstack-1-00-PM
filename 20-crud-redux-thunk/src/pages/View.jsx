@@ -12,7 +12,7 @@ const View = () => {
   },[])
 
   let users = useSelector(state => state.crud.users);
-  console.log(users);
+  
   
 
   return (
@@ -25,6 +25,7 @@ const View = () => {
                   <th>Id</th>
                   <th>Name</th>
                   <th>Age</th>
+                  <th>Action</th>
                 </tr>
             </thead>
 
@@ -32,10 +33,15 @@ const View = () => {
                 {
                     users.map((val,i)=>{
                       return (
-                          <tr>
+                          <tr key={i++}>
                             <td>{val.id}</td>
                             <td>{val.name}</td>
                             <td>{val.age}</td>
+                            <td>
+                                <button>
+                                    <Link to={`/edit/${val.id}`}>Edit</Link>
+                                </button>
+                            </td>
                           </tr>
                       )
                     })
