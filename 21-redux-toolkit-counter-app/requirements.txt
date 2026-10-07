@@ -1,0 +1,15 @@
+npm install @reduxjs/toolkit react-redux
+
+folder structure
+
+src/
+│
+├── app/
+│   └── store.js
+│
+├── features/
+│   └── counter/
+│       └── counterSlice.js
+│
+├── App.jsx
+└── main.jsx
